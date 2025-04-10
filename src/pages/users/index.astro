@@ -1,21 +1,11 @@
 ---
-import { XataClient } from '../../xata';
-
-const xata = new XataClient({
-  apiKey: import.meta.env.XATA_API_KEY,
-  branch: import.meta.env.XATA_BRANCH
-});
-
-const { records } = await xata.db.users.getPaginated({
-  pagination: {
-    size: 50
-  }
-})
+const endpoint = '/getUsers'
+const baseUrl = import.meta.env.API_BASE_URL || 'http://localhost:3000';
+const response = await fetch(`${baseUrl}/api${endpoint}`);
+const records = await response.json();
 console.log(records);
 ---
 
 <ul>
-  {records.map((user) => (
-    <li>{user.username}</li>
-  ))}
+  {records.map((user: { username: any }) => <li>{user.username}</li>)}
 </ul>
