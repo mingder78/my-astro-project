@@ -1,11 +1,14 @@
 // pages/[...slugs].ts
 import { Elysia, t } from "elysia";
 import { swagger } from "@elysiajs/swagger";
+import { getUsers } from "../db/helper"; // Adjust the import path as necessary
 
-const app = new Elysia()
+const app = new Elysia( {
+    prefix: "/api",
+})
   .use(swagger())
-  .get("/api", () => "hi")
-  .post("/api", ({ body }) => body, {
+  .get("/getUsers", () => getUsers())
+  .post("/user", ({ body }) => body, {
     body: t.Object({
       name: t.String(),
     }),
