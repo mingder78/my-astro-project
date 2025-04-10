@@ -1,0 +1,21 @@
+---
+import { XataClient } from '../../xata';
+
+const xata = new XataClient({
+  apiKey: import.meta.env.XATA_API_KEY,
+  branch: import.meta.env.XATA_BRANCH
+});
+
+const { records } = await xata.db.users.getPaginated({
+  pagination: {
+    size: 50
+  }
+})
+console.log(records);
+---
+
+<ul>
+  {records.map((user) => (
+    <li>{user.username}</li>
+  ))}
+</ul>
